@@ -31,7 +31,7 @@ class HistoryViewModel(val repository: repository) : ViewModel(), BasicViewModel
 
     init {
         viewModelScope.launch { repository.returnAllActivities().distinctUntilChanged().collect {
-                books -> mutableAllActivities.value = books
+                activities -> mutableAllActivities.value = activities
         } }
     }
 }

@@ -37,11 +37,14 @@ import androidx.navigation.NavController
 import com.example.sportapp.models.ActivityRepository.getActivities
 import com.example.sportapp.viewmodels.HistoryViewModel
 import com.example.sportapp.storage.Activity
+import com.example.sportapp.storage.User
 import com.example.sportapp.viewmodels.ActivityViewModel
+import com.example.sportapp.viewmodels.MainViewModel
 
 @Composable
-fun MainPageContent(modifier: Modifier, navController: NavController) {
+fun MainPageContent(modifier: Modifier, navController: NavController, mainViewModel: MainViewModel, user: List<User>) {
     val screen = OtherScreens.ActivityPage
+    val allPoints = user.sumOf { it.totalPoints }
     Column(modifier = Modifier
         .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -51,7 +54,7 @@ fun MainPageContent(modifier: Modifier, navController: NavController) {
         .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Gesampunkte", fontSize = 20.sp)
-        Text(text = "1443125", fontSize = 30.sp)
+        Text(text = allPoints.toString(), fontSize = 30.sp)
     }
 
     Spacer(modifier = Modifier)
@@ -97,7 +100,7 @@ fun ActivityPageContent(modifier: Modifier, navController: NavController, activi
     val screen = BottomBarScreen.MainPage
 
     var title by remember { mutableStateOf("") }
-    var id by remember { mutableStateOf("") }
+    var userActivityId: Long by remember { mutableStateOf(0) }
     var points by remember { mutableStateOf(0) }
     var length by remember { mutableStateOf(0) }
     var errorMessageTitle by remember { mutableStateOf<String?>(null) }
@@ -143,7 +146,7 @@ fun ActivityPageContent(modifier: Modifier, navController: NavController, activi
             onClick = {
                 if (title.isNotEmpty()) {
                     var editActivity = Activity(
-                        id = id,
+                        userActivityId = userActivityId,
                         title = title,
                         points = points,
                         length = length
@@ -151,7 +154,14 @@ fun ActivityPageContent(modifier: Modifier, navController: NavController, activi
                     activityViewModel.addNewActivity(editActivity)
                     navController.navigate(screen.route)
 
+                    userActivityId = System.currentTimeMillis()
+                    title = ""
+                    points = 0
+                    length = 0
+
                 }
+
+
             },
             modifier = Modifier.align(Alignment.End)
         ) {

@@ -15,9 +15,17 @@ class repository (private val dao: dao) {
 
     }
 
-    fun returnInsert (activity: Activity) = dao.Insert(activity)
+    fun returnInsert (activity: Activity) = dao.createActivity(activity)
 
-    fun returnDelete (activity: Activity) = dao.Delete(activity)
+    fun returnDelete (activity: Activity) = dao.deleteActivity(activity)
 
     fun returnAllActivities (): Flow<List<Activity>> = dao.getAllActivities()
+
+    fun returnCreateUser (user: User) = dao.createUser(user)
+
+    fun returnDeleteUser (user: User) = dao.deleteUser(user)
+
+    fun returnAddPoints (user: User): List<UserWithActivities> = dao.addPoints(user)
+
+    fun returnGetTotalPoints (): Flow<List<User>> = dao.getTotalPoints()
 }

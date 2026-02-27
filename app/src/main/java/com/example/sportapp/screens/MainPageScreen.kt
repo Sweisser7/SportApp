@@ -6,16 +6,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.sportapp.viewmodels.MainViewModel
 import com.example.sportapp.widgets.MainPageContent
 import com.example.sportapp.widgets.MainPageContent
 import com.example.sportapp.widgets.SimpleBottomAppBar
 import com.example.sportapp.widgets.SimpleTopAppBar
 
 @Composable
-fun MainPageScreen(navController: NavController) {
+fun MainPageScreen(navController: NavController, mainViewModel: MainViewModel) {
     Scaffold(
         topBar = {
             SimpleTopAppBar(title = "Sport App")
@@ -30,7 +32,7 @@ fun MainPageScreen(navController: NavController) {
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            MainPageContent(modifier = Modifier.padding(innerPadding), navController = navController)
+            MainPageContent(modifier = Modifier.padding(innerPadding), navController = navController, user = mainViewModel.allUser.collectAsState().value, mainViewModel = mainViewModel)
 
         }
     }
