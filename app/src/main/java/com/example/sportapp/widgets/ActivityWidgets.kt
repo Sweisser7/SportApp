@@ -37,14 +37,12 @@ import androidx.navigation.NavController
 import com.example.sportapp.models.ActivityRepository.getActivities
 import com.example.sportapp.viewmodels.HistoryViewModel
 import com.example.sportapp.storage.Activity
-import com.example.sportapp.storage.User
 import com.example.sportapp.viewmodels.ActivityViewModel
 import com.example.sportapp.viewmodels.MainViewModel
 
 @Composable
-fun MainPageContent(modifier: Modifier, navController: NavController, mainViewModel: MainViewModel, user: List<User>) {
+fun MainPageContent(modifier: Modifier, navController: NavController, mainViewModel: MainViewModel) {
     val screen = OtherScreens.ActivityPage
-    val allPoints = user.sumOf { it.totalPoints }
     Column(modifier = Modifier
         .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -54,7 +52,7 @@ fun MainPageContent(modifier: Modifier, navController: NavController, mainViewMo
         .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Gesampunkte", fontSize = 20.sp)
-        Text(text = allPoints.toString(), fontSize = 30.sp)
+        Text(text = mainViewModel.totalPoints.toString(), fontSize = 30.sp)
     }
 
     Spacer(modifier = Modifier)
@@ -100,7 +98,7 @@ fun ActivityPageContent(modifier: Modifier, navController: NavController, activi
     val screen = BottomBarScreen.MainPage
 
     var title by remember { mutableStateOf("") }
-    var userActivityId: Long by remember { mutableStateOf(0) }
+    var userActivityId: String by remember { mutableStateOf("") }
     var points by remember { mutableStateOf(0) }
     var length by remember { mutableStateOf(0) }
     var errorMessageTitle by remember { mutableStateOf<String?>(null) }
@@ -154,7 +152,7 @@ fun ActivityPageContent(modifier: Modifier, navController: NavController, activi
                     activityViewModel.addNewActivity(editActivity)
                     navController.navigate(screen.route)
 
-                    userActivityId = System.currentTimeMillis()
+                    userActivityId = System.currentTimeMillis().toString()
                     title = ""
                     points = 0
                     length = 0

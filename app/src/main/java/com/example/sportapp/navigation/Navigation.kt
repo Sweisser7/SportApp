@@ -13,6 +13,7 @@ import com.example.sportapp.screens.MainPageScreen
 import com.example.sportapp.viewmodels.ActivityViewModel
 import com.example.sportapp.viewmodels.HistoryViewModel
 import com.example.sportapp.viewmodels.Injector
+import com.example.sportapp.viewmodels.MainViewModel
 
 @Composable
 fun Navigation() {
@@ -21,11 +22,14 @@ fun Navigation() {
 
     val activityViewModel: ActivityViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
     val historyViewModel: HistoryViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
+    val mainViewModel: MainViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
+
+
 
     NavHost(navController = navController, // pass the NavController to NavHost
         startDestination = Screen.MainPageScreen.route) {  // pass a start destination
         composable(route = Screen.MainPageScreen.route){   // route with name "homescreen" navigates to HomeScreen composable
-            MainPageScreen(navController = navController)
+            MainPageScreen(navController = navController, mainViewModel = mainViewModel)
         }
 
         composable(route = Screen.AchievementScreen.route){

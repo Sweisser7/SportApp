@@ -21,11 +21,13 @@ class repository (private val dao: dao) {
 
     fun returnAllActivities (): Flow<List<Activity>> = dao.getAllActivities()
 
-    fun returnCreateUser (user: User) = dao.createUser(user)
+    fun returnAllPoints (): List<Int> = dao.getAllPoints()
 
-    fun returnDeleteUser (user: User) = dao.deleteUser(user)
-
-    fun returnAddPoints (user: User): List<UserWithActivities> = dao.addPoints(user)
-
-    fun returnGetTotalPoints (): Flow<List<User>> = dao.getTotalPoints()
+//    fun returnCreateUser (user: User) = dao.createUser(user)
+//
+//    fun returnDeleteUser (user: User) = dao.deleteUser(user)
+//
+//    fun returnAddPoints (user: User): List<UserWithActivities> = dao.addPoints(user)
+//
+//    fun returnGetTotalPoints (): Flow<List<User>> = dao.getTotalPoints()
 }

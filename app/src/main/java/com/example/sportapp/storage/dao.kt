@@ -16,19 +16,22 @@ interface dao {
     @Query("Select * from activities")
     fun getAllActivities (): Flow<List<Activity>>
 
+    @Query("Select points from activities")
+    fun getAllPoints (): List<Int>
+
     /*User Data Table*/
-    @Insert
-    fun createUser (user: User)
-
-    @Delete
-    fun deleteUser (user:User)
-
-    @Update
-    fun addPoints (user: User): List<UserWithActivities>
-
-    @Transaction
-    @Query("Select totalPoints from user")
-    fun getTotalPoints (): Flow<List<User>>
+//    @Insert
+//    fun createUser (user: User)
+//
+//    @Delete
+//    fun deleteUser (user:User)
+//
+//    @Update
+//    fun addPoints (user: User): List<UserWithActivities>
+//
+//    @Transaction
+//    @Query("Select totalPoints from user")
+//    fun getTotalPoints (): Flow<List<User>>
 
 
 

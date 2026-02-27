@@ -32,7 +32,7 @@ fun MainPageScreen(navController: NavController, mainViewModel: MainViewModel) {
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            MainPageContent(modifier = Modifier.padding(innerPadding), navController = navController, user = mainViewModel.allUser.collectAsState().value, mainViewModel = mainViewModel)
+            MainPageContent(modifier = Modifier.padding(innerPadding), navController = navController, mainViewModel = mainViewModel)
 
         }
     }
