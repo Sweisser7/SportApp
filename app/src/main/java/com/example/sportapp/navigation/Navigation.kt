@@ -33,14 +33,14 @@ fun Navigation() {
         }
 
         composable(route = Screen.AchievementScreen.route){
-            AchievementScreen(navController = navController)
+            AchievementScreen(navController = navController, mainViewModel = mainViewModel)
         }
 
         composable(route = Screen.HistoryScreen.route){
-            HistoryScreen(navController = navController, historyViewModel = historyViewModel)
+            HistoryScreen(navController = navController, historyViewModel = historyViewModel, mainViewModel = mainViewModel)
         }
         composable(route = Screen.ActivityScreen.route) {
-            ActivityScreen(navController = navController, activityViewModel = activityViewModel)
+            ActivityScreen(navController = navController, activityViewModel = activityViewModel, historyViewModel = historyViewModel, mainViewModel = mainViewModel)
         }
     }
 

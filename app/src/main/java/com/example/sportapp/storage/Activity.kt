@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey
 data class Activity (
     @PrimaryKey(autoGenerate = true)
     val databaseId: Long=0,
-    var userActivityId: String,
-    var title: String,
-    var points: Int,
-    var length: Int
+    var userActivityId: Int,
+    var points: Long,
+    var length: Long
 )

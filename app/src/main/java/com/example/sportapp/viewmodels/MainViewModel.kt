@@ -16,12 +16,6 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(val repository: repository) : ViewModel(), BasicViewModel {
 
-    private val mutableAllActivities = MutableStateFlow(listOf<com.example.sportapp.storage.Activity>())
-
-    val allActivities: StateFlow<List<com.example.sportapp.storage.Activity>> = mutableAllActivities.asStateFlow()
-
-
-
     val totalPoints = repository.returnAllPoints().sumOf { it }
 
 

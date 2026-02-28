@@ -11,16 +11,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sportapp.viewmodels.ActivityViewModel
 import com.example.sportapp.viewmodels.HistoryViewModel
+import com.example.sportapp.viewmodels.MainViewModel
 import com.example.sportapp.widgets.HistoryPageContent
 import com.example.sportapp.widgets.MainPageContent
 import com.example.sportapp.widgets.SimpleBottomAppBar
 import com.example.sportapp.widgets.SimpleTopAppBar
 
 @Composable
-fun HistoryScreen(navController: NavController, historyViewModel: HistoryViewModel) {
+fun HistoryScreen(navController: NavController, historyViewModel: HistoryViewModel, mainViewModel: MainViewModel) {
     Scaffold(
         topBar = {
-            SimpleTopAppBar(title = "Verlauf")
+            SimpleTopAppBar(title = "Verlauf", mainViewModel = mainViewModel)
         },
         bottomBar = {
             SimpleBottomAppBar(navController = navController)

@@ -10,17 +10,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sportapp.storage.Activity
 import com.example.sportapp.viewmodels.ActivityViewModel
+import com.example.sportapp.viewmodels.HistoryViewModel
+import com.example.sportapp.viewmodels.MainViewModel
 import com.example.sportapp.widgets.ActivityPageContent
 import com.example.sportapp.widgets.MainPageContent
 import com.example.sportapp.widgets.SimpleBottomAppBar
 import com.example.sportapp.widgets.SimpleTopAppBar
 
 @Composable
-fun ActivityScreen(navController: NavController, activityViewModel: ActivityViewModel) {
+fun ActivityScreen(navController: NavController, activityViewModel: ActivityViewModel, historyViewModel: HistoryViewModel, mainViewModel: MainViewModel) {
 
     Scaffold(
         topBar = {
-            SimpleTopAppBar(title = "Aktivität")
+            SimpleTopAppBar(title = "Aktivität", mainViewModel = mainViewModel)
         }
     ) { innerPadding ->
         Column(
@@ -28,7 +30,7 @@ fun ActivityScreen(navController: NavController, activityViewModel: ActivityView
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            ActivityPageContent(modifier = Modifier.padding(innerPadding), navController = navController, activityViewModel = activityViewModel)
+            ActivityPageContent(modifier = Modifier.padding(innerPadding), navController = navController, activityViewModel = activityViewModel, historyViewModel = historyViewModel)
 
         }
     }

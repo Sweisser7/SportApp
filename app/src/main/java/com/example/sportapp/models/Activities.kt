@@ -3,17 +3,15 @@ package com.example.sportapp.models
 
 
 data class Activity(
-    val userActivityId: String,
-    val title: String,
-    val points: Int,
-    val length: Int
+    val userActivityId: Int,
+    val points: Long,
+    val length: Long
 )
 
 object ActivityRepository {
     private val activities: MutableList<Activity> = mutableListOf(
         Activity(
-            userActivityId = "",
-            title = "Aktivität 1",
+            userActivityId = 0,
             points = 1244,
             length = 300
         )
@@ -27,7 +25,7 @@ object ActivityRepository {
         activities.add(activity)
     }
 
-    fun deleteActivityById(id: String): Boolean {
+    fun deleteActivityById(id: Int): Boolean {
         return activities.removeIf { it.userActivityId == id }
     }
 

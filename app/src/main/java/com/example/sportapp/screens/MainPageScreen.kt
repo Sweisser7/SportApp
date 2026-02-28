@@ -20,7 +20,7 @@ import com.example.sportapp.widgets.SimpleTopAppBar
 fun MainPageScreen(navController: NavController, mainViewModel: MainViewModel) {
     Scaffold(
         topBar = {
-            SimpleTopAppBar(title = "Sport App")
+            SimpleTopAppBar(title = "Sport App", mainViewModel = mainViewModel)
         },
         bottomBar = {
             SimpleBottomAppBar (navController = navController)

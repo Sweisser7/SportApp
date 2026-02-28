@@ -8,16 +8,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.sportapp.viewmodels.MainViewModel
 import com.example.sportapp.widgets.AchievementPageContent
 import com.example.sportapp.widgets.MainPageContent
 import com.example.sportapp.widgets.SimpleBottomAppBar
 import com.example.sportapp.widgets.SimpleTopAppBar
 
 @Composable
-fun AchievementScreen(navController: NavController) {
+fun AchievementScreen(navController: NavController, mainViewModel: MainViewModel) {
     Scaffold(
         topBar = {
-            SimpleTopAppBar(title = "Erfolge")
+            SimpleTopAppBar(title = "Erfolge", mainViewModel = mainViewModel)
         },
         bottomBar = {
             SimpleBottomAppBar(navController = navController)
