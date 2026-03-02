@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 class LocationManager(
-    private val context: Context,
     private val fusedLocationProviderClient: FusedLocationProviderClient
 ) {
 

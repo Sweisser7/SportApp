@@ -16,19 +16,19 @@ sealed class BottomBarScreen (
 ){
     object MainPage: BottomBarScreen(
         route = Screen.MainPageScreen.route,
-        title = "mainpage",
+        title = "Startseite",
         icon = Icons.Filled.Home
     )
 
     object Achievements: BottomBarScreen(
         route = Screen.AchievementScreen.route,
-        title = "achievement",
+        title = "Erfolge",
         icon = Icons.Filled.Star
     )
 
     object History: BottomBarScreen(
         route = Screen.HistoryScreen.route,
-        title = "history",
+        title = "Verlauf",
         icon = Icons.Filled.AccountCircle
     )
 

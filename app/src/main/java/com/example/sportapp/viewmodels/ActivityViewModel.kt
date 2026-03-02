@@ -10,6 +10,7 @@ import com.example.sportapp.storage.repository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -31,12 +32,11 @@ class ActivityViewModel(
     val currentPoints = _currentPoints.asStateFlow()
 
     private val _currentLocation = MutableStateFlow<Location?>(null)
-    val currentLocation = _currentLocation.asStateFlow()
 
     private var timerJob: Job? = null
     private var locationJob: Job? = null
 
-    // Hilfsvariable, um die vorherige Position zu speichern
+
     private var lastLocation: Location? = null
 
     var isRunning = false
@@ -68,8 +68,8 @@ class ActivityViewModel(
                 if (isRunning) {
                     lastLocation?.let { previous ->
                         val distance = previous.distanceTo(newLocation)
-                        if (distance > 1.0) { // Kleiner Schwellenwert gegen GPS-Zittern
-                            _currentPoints.value += (distance.toLong()+10)
+                        if (distance < 500) {
+                            _currentPoints.value += (distance.toLong()+10L)
                         }
                     }
                     lastLocation = newLocation
@@ -99,12 +99,27 @@ class ActivityViewModel(
         repository.returnInsertActivity(activity)
     }
 
+    fun saveActivity(points: Long, time: Long, currentListSize: Int) {
+        viewModelScope.launch {
+            val newId = currentListSize + 1
+            val newActivity = Activity(
+                userActivityId = newId,
+                points = points,
+                length = time
+            )
+            repository.returnInsertActivity(newActivity)
+        }
+    }
+
+    private val mutableAllActivities = MutableStateFlow(listOf<Activity>())
+
+    val allActivities: StateFlow<List<Activity>> = mutableAllActivities.asStateFlow()
+
     fun savePointsToDatabase() {
         viewModelScope.launch {
             val pointsToSave = _currentPoints.value
             repository.addPoints(pointsToSave)
 
-            // Danach die aktuellen Punkte der Session zurücksetzen
         }
     }
 }

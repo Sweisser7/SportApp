@@ -27,6 +27,8 @@ class repository (private val dao: dao) {
         dao.initiatePoints(TotalPoints(databaseId = 1, totalPoints = 0))
     }
 
+    fun resetPoints(resetPointsValue: Long) = dao.resetPoints(resetPointsValue = resetPointsValue)
+
     fun addPoints(amount: Long) {
         dao.addToTotalPoints(amount)
     }

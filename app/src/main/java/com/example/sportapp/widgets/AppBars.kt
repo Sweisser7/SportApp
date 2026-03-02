@@ -1,5 +1,6 @@
 package com.example.sportapp.widgets
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,6 +37,7 @@ import com.example.sportapp.viewmodels.MainViewModel
 @Composable
 fun SimpleTopAppBar(
     title: String,
+    gesamtpunkte: String,
     navigationIcons: @Composable () -> Unit = {},
 
     ){
@@ -43,8 +45,10 @@ fun SimpleTopAppBar(
         title = {
             Row(modifier = Modifier
                 .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically) {
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(title)
+                Text(gesamtpunkte)
 
             }},
         colors = TopAppBarDefaults.topAppBarColors(

@@ -14,7 +14,7 @@ object Injector {
 
     private fun getLocationManager(context: Context): LocationManager {
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context.applicationContext)
-        return LocationManager(context.applicationContext, fusedLocationProviderClient)
+        return LocationManager(fusedLocationProviderClient)
     }
 
     fun provideModelFactory(context: Context): Factory {

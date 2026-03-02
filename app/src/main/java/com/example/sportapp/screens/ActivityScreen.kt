@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,7 +23,7 @@ fun ActivityScreen(navController: NavController, activityViewModel: ActivityView
 
     Scaffold(
         topBar = {
-            SimpleTopAppBar(title = "Aktivität")
+            SimpleTopAppBar(title = "Aktivität", gesamtpunkte = "")
         }
     ) { innerPadding ->
         Column(
@@ -30,7 +31,10 @@ fun ActivityScreen(navController: NavController, activityViewModel: ActivityView
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            ActivityPageContent(modifier = Modifier.padding(innerPadding), navController = navController, activityViewModel = activityViewModel)
+            ActivityPageContent(modifier = Modifier.padding(innerPadding),
+                navController = navController,
+                activityViewModel = activityViewModel,
+                activity = activityViewModel.allActivities.collectAsState().value)
 
         }
     }

@@ -7,7 +7,7 @@ import com.example.sportapp.storage.repository
 
 class Factory(
     private val repository: repository,
-    private val locationManager: LocationManager // Neu hinzugefügt
+    private val locationManager: LocationManager
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

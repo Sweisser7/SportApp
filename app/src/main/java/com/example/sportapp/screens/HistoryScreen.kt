@@ -19,14 +19,14 @@ import com.example.sportapp.widgets.MainPageContent
 import com.example.sportapp.widgets.SimpleBottomAppBar
 import com.example.sportapp.widgets.SimpleTopAppBar
 
+
 @Composable
 fun HistoryScreen(navController: NavController, historyViewModel: HistoryViewModel) {
     Scaffold(
         topBar = {
             val stats by historyViewModel.totalPoints.collectAsState()
             Column() {
-                SimpleTopAppBar(title = "Verlauf")
-                Text(text = "Gesamtpunkte: ${stats?.totalPoints ?: 0}")
+                SimpleTopAppBar(title = "Verlauf", gesamtpunkte = "Gesamtpunkte: ${stats?.totalPoints ?: 0}")
             }
         },
         bottomBar = {

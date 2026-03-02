@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.sportapp.storage.Activity
 import com.example.sportapp.storage.TotalPoints
 import com.example.sportapp.storage.repository
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +26,10 @@ class HistoryViewModel(val repository: repository) : ViewModel(), BasicViewModel
             initialValue = null // Startwert, bis die DB geantwortet hat
         )
 
-
+    fun deleteActivity (activity: Activity) {
+        repository.returnDeleteActivity(activity)
+        repository.resetPoints(resetPointsValue = 0L)
+    }
 
     init {
         viewModelScope.launch { repository.returnAllActivities().distinctUntilChanged().collect {
