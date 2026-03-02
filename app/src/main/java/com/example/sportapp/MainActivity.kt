@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.lifecycle.lifecycleScope
 import com.example.sportapp.navigation.Navigation
 import com.example.sportapp.ui.theme.SportAppTheme
+import com.example.sportapp.viewmodels.Injector
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +21,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onStart() {
+
         super.onStart()
         Log.i("MainActivity", "onStart called.")
     }

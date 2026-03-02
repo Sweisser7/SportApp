@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,9 +23,10 @@ import com.example.sportapp.widgets.SimpleTopAppBar
 fun HistoryScreen(navController: NavController, historyViewModel: HistoryViewModel) {
     Scaffold(
         topBar = {
+            val stats by historyViewModel.totalPoints.collectAsState()
             Column() {
                 SimpleTopAppBar(title = "Verlauf")
-                Text(text = "Gesamtpunkte: " + historyViewModel.totalPoints.toString())
+                Text(text = "Gesamtpunkte: ${stats?.totalPoints ?: 0}")
             }
         },
         bottomBar = {

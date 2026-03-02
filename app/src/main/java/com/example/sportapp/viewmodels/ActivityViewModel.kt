@@ -88,6 +88,7 @@ class ActivityViewModel(
 
     fun reset() {
         stop()
+        savePointsToDatabase()
         _elapsedTime.value = 0L
         _currentPoints.value = 0L
         _currentLocation.value = null
@@ -95,6 +96,15 @@ class ActivityViewModel(
     }
 
     fun addNewActivity(activity: Activity) {
-        repository.returnInsert(activity)
+        repository.returnInsertActivity(activity)
+    }
+
+    fun savePointsToDatabase() {
+        viewModelScope.launch {
+            val pointsToSave = _currentPoints.value
+            repository.addPoints(pointsToSave)
+
+            // Danach die aktuellen Punkte der Session zurücksetzen
+        }
     }
 }

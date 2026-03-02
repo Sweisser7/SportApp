@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -20,9 +22,10 @@ import com.example.sportapp.widgets.SimpleTopAppBar
 fun AchievementScreen(navController: NavController, achievementViewModel: AchievementViewModel) {
     Scaffold(
         topBar = {
-            Column() {
+            val stats by achievementViewModel.totalPoints.collectAsState()
+            Column {
                 SimpleTopAppBar(title = "Erfolge")
-                Text(text = "Gesamtpunkte: " + achievementViewModel.totalPoints.toString())
+                Text(text = "Gesamtpunkte: ${stats?.totalPoints ?: 0}")
             }
 
         },

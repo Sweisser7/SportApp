@@ -16,20 +16,18 @@ interface dao {
     @Query("Select * from activities")
     fun getAllActivities (): Flow<List<Activity>>
 
-    @Query("Select points from activities")
-    fun getAllPoints (): List<Int>
-
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun initiatePoints (totalPoints: TotalPoints)
 
-    @Delete
-    fun resetPoints (totalPoints: TotalPoints)
+
+    @Query("UPDATE totalPoints SET totalPoints = totalPoints + :newPoints WHERE databaseId = 1")
+    fun addToTotalPoints(newPoints: Long)
+
+    @Query("SELECT * FROM TOTALPOINTS WHERE databaseId = 1")
+    fun getAllPoints(): Flow<TotalPoints?>
 
     @Update
-    fun updatePoints (totalPoints: TotalPoints)
-
-    @Query("Select totalPoints from totalPoints")
-    fun getTotalPoints ()
+    fun resetPoints (totalPoints: TotalPoints)
 
     /*User Data Table*/
 //    @Insert

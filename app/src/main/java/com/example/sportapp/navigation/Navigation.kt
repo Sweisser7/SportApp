@@ -10,6 +10,7 @@ import com.example.sportapp.screens.AchievementScreen
 import com.example.sportapp.screens.ActivityScreen
 import com.example.sportapp.screens.HistoryScreen
 import com.example.sportapp.screens.MainPageScreen
+import com.example.sportapp.storage.repository
 import com.example.sportapp.viewmodels.AchievementViewModel
 import com.example.sportapp.viewmodels.ActivityViewModel
 import com.example.sportapp.viewmodels.HistoryViewModel
@@ -25,6 +26,8 @@ fun Navigation() {
     val historyViewModel: HistoryViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
     val mainViewModel: MainViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
     val achievementViewModel: AchievementViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
+
+
 
 
 

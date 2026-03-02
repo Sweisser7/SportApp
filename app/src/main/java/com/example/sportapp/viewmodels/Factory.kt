@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.sportapp.location.LocationManager
 import com.example.sportapp.storage.repository
-import com.google.android.gms.location.FusedLocationProviderClient
 
 class Factory(
     private val repository: repository,
