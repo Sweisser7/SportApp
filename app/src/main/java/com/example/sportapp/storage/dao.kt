@@ -19,6 +19,18 @@ interface dao {
     @Query("Select points from activities")
     fun getAllPoints (): List<Int>
 
+    @Insert
+    fun initiatePoints (totalPoints: TotalPoints)
+
+    @Delete
+    fun resetPoints (totalPoints: TotalPoints)
+
+    @Update
+    fun updatePoints (totalPoints: TotalPoints)
+
+    @Query("Select totalPoints from totalPoints")
+    fun getTotalPoints ()
+
     /*User Data Table*/
 //    @Insert
 //    fun createUser (user: User)

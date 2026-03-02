@@ -18,6 +18,8 @@ class HistoryViewModel(val repository: repository) : ViewModel(), BasicViewModel
     private val mutableAllActivities = MutableStateFlow(listOf<Activity>())
     private var idJob: Job? = null
 
+    val totalPoints = repository.returnAllPoints().sumOf { it }
+
     val allActivities: StateFlow<List<Activity>> = mutableAllActivities.asStateFlow()
 
     fun deleteActivity (activity: Activity) {

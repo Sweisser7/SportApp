@@ -10,6 +10,7 @@ import com.example.sportapp.screens.AchievementScreen
 import com.example.sportapp.screens.ActivityScreen
 import com.example.sportapp.screens.HistoryScreen
 import com.example.sportapp.screens.MainPageScreen
+import com.example.sportapp.viewmodels.AchievementViewModel
 import com.example.sportapp.viewmodels.ActivityViewModel
 import com.example.sportapp.viewmodels.HistoryViewModel
 import com.example.sportapp.viewmodels.Injector
@@ -23,6 +24,8 @@ fun Navigation() {
     val activityViewModel: ActivityViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
     val historyViewModel: HistoryViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
     val mainViewModel: MainViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
+    val achievementViewModel: AchievementViewModel = viewModel(factory = Injector.provideModelFactory(context = LocalContext.current))
+
 
 
 
@@ -33,14 +36,14 @@ fun Navigation() {
         }
 
         composable(route = Screen.AchievementScreen.route){
-            AchievementScreen(navController = navController, mainViewModel = mainViewModel)
+            AchievementScreen(navController = navController, achievementViewModel = achievementViewModel)
         }
 
         composable(route = Screen.HistoryScreen.route){
-            HistoryScreen(navController = navController, historyViewModel = historyViewModel, mainViewModel = mainViewModel)
+            HistoryScreen(navController = navController, historyViewModel = historyViewModel)
         }
         composable(route = Screen.ActivityScreen.route) {
-            ActivityScreen(navController = navController, activityViewModel = activityViewModel, historyViewModel = historyViewModel, mainViewModel = mainViewModel)
+            ActivityScreen(navController = navController, activityViewModel = activityViewModel)
         }
     }
 

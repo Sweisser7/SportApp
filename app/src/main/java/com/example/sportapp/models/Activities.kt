@@ -1,5 +1,8 @@
 package com.example.sportapp.models
 
+import android.os.Bundle
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 
 data class Activity(
@@ -17,6 +20,9 @@ object ActivityRepository {
         )
     )
 
+
+
+
     fun getActivities(): List<Activity> {
         return listOf(*activities.toTypedArray())
     }
@@ -28,6 +34,7 @@ object ActivityRepository {
     fun deleteActivityById(id: Int): Boolean {
         return activities.removeIf { it.userActivityId == id }
     }
+
 
 }
 

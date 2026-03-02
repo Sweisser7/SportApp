@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -20,7 +21,11 @@ import com.example.sportapp.widgets.SimpleTopAppBar
 fun MainPageScreen(navController: NavController, mainViewModel: MainViewModel) {
     Scaffold(
         topBar = {
-            SimpleTopAppBar(title = "Sport App", mainViewModel = mainViewModel)
+            Column() {
+                SimpleTopAppBar(title = "Sport App")
+                Text(text = "Gesamtpunkte: " + mainViewModel.totalPoints.toString())
+            }
+
         },
         bottomBar = {
             SimpleBottomAppBar (navController = navController)

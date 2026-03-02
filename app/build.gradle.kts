@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -51,6 +52,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.gms.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -68,4 +70,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     implementation("com.squareup.okhttp3:okhttp:4.2.2")
+    implementation(libs.accompanist.permissions)
+    implementation(libs.play.services.location)
+
+
 }

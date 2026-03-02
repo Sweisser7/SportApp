@@ -3,6 +3,8 @@ package com.example.sportapp.viewmodels
 import android.content.Context
 import com.example.sportapp.storage.database
 import com.example.sportapp.storage.repository
+import com.google.android.gms.location.LocationServices
+import com.example.sportapp.location.LocationManager
 
 object Injector {
 
@@ -10,8 +12,18 @@ object Injector {
         return repository.returnInstance((database.getDatabase(context.applicationContext).dao()))
     }
 
+    private fun getLocationManager(context: Context): LocationManager {
+        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context.applicationContext)
+        return LocationManager(context.applicationContext, fusedLocationProviderClient)
+    }
+
     fun provideModelFactory(context: Context): Factory {
         val repository = getRepository(context)
-        return Factory(repository = repository)
+        val locationManager = getLocationManager(context)
+
+        return Factory(
+            repository = repository,
+            locationManager = locationManager
+        )
     }
 }

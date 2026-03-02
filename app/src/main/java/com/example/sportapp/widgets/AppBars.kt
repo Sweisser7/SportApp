@@ -23,10 +23,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.room.util.TableInfo
+import com.example.sportapp.viewmodels.BasicViewModel
+import com.example.sportapp.viewmodels.HistoryViewModel
 import com.example.sportapp.viewmodels.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,16 +37,15 @@ import com.example.sportapp.viewmodels.MainViewModel
 fun SimpleTopAppBar(
     title: String,
     navigationIcons: @Composable () -> Unit = {},
-    mainViewModel: MainViewModel
-){
+
+    ){
     CenterAlignedTopAppBar(
         title = {
             Row(modifier = Modifier
                 .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(title)
-                Spacer(modifier = Modifier.weight(1f))
-                Text("Gesampunkte: " + mainViewModel.totalPoints.toString())
+
             }},
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,

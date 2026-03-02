@@ -18,11 +18,11 @@ import com.example.sportapp.widgets.SimpleBottomAppBar
 import com.example.sportapp.widgets.SimpleTopAppBar
 
 @Composable
-fun ActivityScreen(navController: NavController, activityViewModel: ActivityViewModel, historyViewModel: HistoryViewModel, mainViewModel: MainViewModel) {
+fun ActivityScreen(navController: NavController, activityViewModel: ActivityViewModel) {
 
     Scaffold(
         topBar = {
-            SimpleTopAppBar(title = "Aktivität", mainViewModel = mainViewModel)
+            SimpleTopAppBar(title = "Aktivität")
         }
     ) { innerPadding ->
         Column(
@@ -30,7 +30,7 @@ fun ActivityScreen(navController: NavController, activityViewModel: ActivityView
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            ActivityPageContent(modifier = Modifier.padding(innerPadding), navController = navController, activityViewModel = activityViewModel, historyViewModel = historyViewModel)
+            ActivityPageContent(modifier = Modifier.padding(innerPadding), navController = navController, activityViewModel = activityViewModel)
 
         }
     }

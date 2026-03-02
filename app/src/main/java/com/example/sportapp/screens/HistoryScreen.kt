@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -18,10 +19,13 @@ import com.example.sportapp.widgets.SimpleBottomAppBar
 import com.example.sportapp.widgets.SimpleTopAppBar
 
 @Composable
-fun HistoryScreen(navController: NavController, historyViewModel: HistoryViewModel, mainViewModel: MainViewModel) {
+fun HistoryScreen(navController: NavController, historyViewModel: HistoryViewModel) {
     Scaffold(
         topBar = {
-            SimpleTopAppBar(title = "Verlauf", mainViewModel = mainViewModel)
+            Column() {
+                SimpleTopAppBar(title = "Verlauf")
+                Text(text = "Gesamtpunkte: " + historyViewModel.totalPoints.toString())
+            }
         },
         bottomBar = {
             SimpleBottomAppBar(navController = navController)
