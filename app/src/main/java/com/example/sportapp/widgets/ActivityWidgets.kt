@@ -2,7 +2,6 @@ package com.example.sportapp.widgets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,43 +11,38 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItemDefaults.contentColor
-import androidx.compose.material3.ShapeDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.sportapp.storage.Achievement
 import com.example.sportapp.viewmodels.HistoryViewModel
 import com.example.sportapp.storage.Activity
+import com.example.sportapp.viewmodels.AchievementViewModel
 import com.example.sportapp.viewmodels.ActivityViewModel
 import com.example.sportapp.viewmodels.MainViewModel
+import com.example.sportapp.viewmodels.SortType
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import kotlinx.coroutines.flow.lastOrNull
 import java.util.Locale
 
 
@@ -64,7 +58,6 @@ fun MainPageContent(modifier: Modifier, navController: NavController, mainViewMo
         .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
     }
-
     Spacer(modifier = Modifier.height(250.dp))
     Column(modifier = Modifier
         .fillMaxWidth(),
@@ -74,17 +67,41 @@ fun MainPageContent(modifier: Modifier, navController: NavController, mainViewMo
             Text(text = "Aktivität starten", fontSize = 35.sp)
         }
     }
-
 }
 
 @Composable
-fun AchievementPageContent(modifier: Modifier) {
-    Column(modifier = Modifier
-        .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Hello World2")
+fun AchievementPageContent(
+    modifier: Modifier,
+    achievementviewModel: AchievementViewModel,
+    achievement: List<Achievement>,
+    navController: NavController
+) {
+    LazyColumn(modifier = modifier) {
+        items(achievement) { singleAchievement ->
+            AchievementColumn(
+                achievement = singleAchievement,
+                navController = navController,
+                achievementviewModel = achievementviewModel)
+        }
     }
+}
 
+@Composable
+fun AchievementColumn(
+    modifier: Modifier = Modifier,
+    achievementviewModel: AchievementViewModel,
+    navController: NavController,
+    achievement: Achievement,
+) {
+    Column(modifier = modifier.padding(8.dp))
+    {
+        Text(text = achievement.title, fontSize = 18.sp)
+        HorizontalDivider(
+            modifier = Modifier.padding(top = 8.dp),
+            thickness = DividerDefaults.Thickness,
+            color = DividerDefaults.color
+        )
+    }
 }
 
 @Composable
@@ -94,11 +111,31 @@ fun HistoryPageContent(
     activity: List<Activity>,
     navController: NavController
 ) {
-    Column(modifier = modifier) { // Column um den Header und die Liste zu gruppieren
-
+    val sortedActivities by historyviewModel.activities.collectAsState()
+    val currentSortType by historyviewModel.sortType.collectAsState()
+    Column(modifier = modifier) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            FilterButton(
+                text = "Kein Filter",
+                isSelected = currentSortType == SortType.NONE,
+                onClick = { historyviewModel.setSortType(SortType.NONE) }
+            )
+            FilterButton(
+                text = "Punkte",
+                isSelected = currentSortType == SortType.POINTS,
+                onClick = { historyviewModel.setSortType(SortType.POINTS) }
+            )
+            FilterButton(
+                text = "Dauer",
+                isSelected = currentSortType == SortType.TIME,
+                onClick = { historyviewModel.setSortType(SortType.TIME) }
+            )
+        }
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            // Hier nutzen wir itemsIndexed statt items
-            items(activity) { singleActivity ->
+            items(sortedActivities) { singleActivity ->
                 ActivityColumn(
                     activity = singleActivity,
                     navController = navController,
@@ -116,13 +153,11 @@ fun ActivityColumn(
     navController: NavController,
     activity: Activity,
 ) {
-
     Column(modifier = modifier.padding(8.dp)) {
-
         Row(modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically) {
-            Column() {
+            Column {
                 Text(text = "Aktivität ${activity.userActivityId}", fontWeight = FontWeight.SemiBold)
                 Text(text = "Punkte: ${activity.points}", fontSize = 18.sp)
                 Text(
@@ -135,13 +170,25 @@ fun ActivityColumn(
                 .size(30.dp),
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Delete Activity")
-
         }
         HorizontalDivider(
             modifier = Modifier.padding(top = 8.dp),
             thickness = DividerDefaults.Thickness,
             color = DividerDefaults.color
         )
+    }
+}
+
+@Composable
+fun FilterButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.LightGray,
+            contentColor = if (isSelected) Color.White else Color.Black
+        )
+    ) {
+        Text(text)
     }
 }
 
@@ -158,9 +205,6 @@ fun ActivityPageContent(modifier: Modifier,
 
     val time by activityViewModel.elapsedTime.collectAsState()
     val point by activityViewModel.currentPoints.collectAsState()
-
-    var userActivityId: Int by remember { mutableStateOf(0) }
-
     val locationPermissions = rememberMultiplePermissionsState(
         permissions = listOf(
             android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -192,15 +236,12 @@ fun ActivityPageContent(modifier: Modifier,
             Spacer(modifier = Modifier.width(16.dp))
             Button(onClick = {
                 if (point > 0L) {
-                    val nextId = activity.size + 1
+                    var nextId = 1
+                    if (activity.isNotEmpty()) {
+                        nextId = activity.count() + 1
+                    }
+                    activityViewModel.saveActivity( point, time, nextId)
 
-                    val editActivity = Activity(
-                        userActivityId = nextId,
-                        points = point,
-                        length = time
-                    )
-
-                    activityViewModel.addNewActivity(editActivity)
                     activityViewModel.reset()
                     navController.navigate(screen.route)
                 } else {
@@ -213,8 +254,6 @@ fun ActivityPageContent(modifier: Modifier,
         }
         Spacer(modifier = Modifier.height(12.dp))
     }
-
-
 }
 
 fun formatTime(timeInMillis: Long, showMilliSecs: Boolean): String {

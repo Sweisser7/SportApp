@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sportapp.viewmodels.AchievementViewModel
 import com.example.sportapp.widgets.AchievementPageContent
+import com.example.sportapp.widgets.HistoryPageContent
 import com.example.sportapp.widgets.SimpleBottomAppBar
 import com.example.sportapp.widgets.SimpleTopAppBar
 
@@ -31,13 +32,11 @@ fun AchievementScreen(navController: NavController, achievementViewModel: Achiev
 
         }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            AchievementPageContent(modifier = Modifier.padding(innerPadding))
-
-        }
+        AchievementPageContent(
+            modifier = Modifier.padding(innerPadding),
+            achievementviewModel = achievementViewModel,
+            achievement = achievementViewModel.unlockedAchievements.collectAsState().value,
+            navController = navController
+        )
     }
 }

@@ -39,18 +39,24 @@ fun SimpleTopAppBar(
     title: String,
     gesamtpunkte: String,
     navigationIcons: @Composable () -> Unit = {},
-
     ){
     CenterAlignedTopAppBar(
         title = {
-            Row(modifier = Modifier
-                .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(title)
-                Text(gesamtpunkte)
-
-            }},
+            if (title == "Aktivität ") {
+                Row(modifier = Modifier
+                    .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    Text(title)
+                    Text(gesamtpunkte)
+                }
+            } else {
+                Row(modifier = Modifier
+                    .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(title)
+                    Text(gesamtpunkte)
+                }}},
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary
@@ -66,7 +72,6 @@ fun SimpleBottomAppBar(navController: NavController) {
         BottomBarScreen.Achievements,
         BottomBarScreen.History
     )
-
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
