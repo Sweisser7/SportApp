@@ -33,22 +33,21 @@ class repository (private val dao: dao) {
         dao.addToTotalPoints(amount)
     }
 
-
     fun returnUnlockedAchievements(): Flow<List<Achievement>> = dao.getUnlockedAchievements()
 
 
     fun checkTotalMilestones() {
 
-        // 1. Aktuelle Gesamtwerte aus der Datenbank holen
+
         val totalActivities = dao.getTotalActivitiesCount()
         val totalPointsReached = dao.getTotalPoints() ?: 0L
         val totalDurationMillis = dao.getTotalDuration() ?: 0L
 
-        // Umrechnung für leichtere Vergleiche
+
         val totalPointsAcquired = totalPointsReached
         val totalDurationHours = totalDurationMillis / (1000L * 60 * 60)
 
-        // 2. Prüfen: Aktivitäten-Meilensteine
+
         val lockedActivityAchievements = dao.getLockedAchievementsByType("ACTIVITIES")
         for (achievement in lockedActivityAchievements) {
             if (totalActivities >= achievement.requiredValue) {
@@ -56,7 +55,7 @@ class repository (private val dao: dao) {
             }
         }
 
-        // 3. Prüfen: Distanz-Meilensteine
+
         val lockedPointsAchievements = dao.getLockedAchievementsByType("POINTS")
         for (achievement in lockedPointsAchievements) {
             if (totalPointsAcquired >= achievement.requiredValue) {
@@ -64,7 +63,7 @@ class repository (private val dao: dao) {
             }
         }
 
-        // 4. Prüfen: Zeit-Meilensteine
+
         val lockedTimeAchievements = dao.getLockedAchievementsByType("TIME")
         for (achievement in lockedTimeAchievements) {
             if (totalDurationHours >= achievement.requiredValue) {
@@ -74,12 +73,9 @@ class repository (private val dao: dao) {
     }
 
     private fun unlock(achievement: Achievement) {
-        // Status auf true setzen und in DB updaten
+
         val unlockedAchievement = achievement.copy(isUnlocked = true)
         dao.updateAchievement(unlockedAchievement)
-
-        // Hier könntest du später ein Event feuern, um ein Konfetti-Popup im UI zu zeigen!
-        println("ERFOLG FREIGESCHALTET: ${achievement.title}")
     }
 
     fun initAchievements() {
